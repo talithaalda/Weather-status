@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Detection</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Weather Detection</h1>
+      <div id="status">
+        <p id="water-status">Status Air:</p>
+        <p id="wind-status">Status Angin:</p>
+      </div>
+      <div id="timer"></div>
+    </div>
+
+    <script>
+      function fetchDataAndTimer() {
+        fetchData(); // Fetch data immediately
+        setInterval(fetchData, 15000); // Fetch data every 15 seconds
+      }
+
+      function updateTimer(seconds) {
+        const timerElement = document.getElementById("timer");
+        timerElement.innerText = seconds + " detik";
+      }
+
+      // Fetch data and start timer initially
+      fetchDataAndTimer();
+
+      // Update timer every second
+      let countdown = 15;
+      updateTimer(countdown);
+      const countdownInterval = setInterval(() => {
+        countdown--;
+        updateTimer(countdown);
+        if (countdown <= 0) {
+          countdown = 15;
+          updateTimer(countdown);
+        }
+      }, 1000);
+      function fetchData() {
+        fetch("/data")
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("water-status").innerText =
+              "Status Air: " +
+              data.water_status +
+              " (" +
+              data.water +
+              " meter)";
+            document.getElementById("wind-status").innerText =
+              "Status Angin: " +
+              data.wind_status +
+              " (" +
+              data.wind +
+              " meter/detik)";
+          })
+          .catch((error) => console.error("Error fetching data:", error));
+      }
+    </script>
+  </body>
+</html>
