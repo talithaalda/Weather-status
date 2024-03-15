@@ -18,8 +18,8 @@
 
     <script>
       function fetchDataAndTimer() {
-        fetchData(); // Fetch data immediately
-        setInterval(fetchData, 15000); // Fetch data every 15 seconds
+        fetchData();
+        setInterval(fetchData, 15000);
       }
 
       function updateTimer(seconds) {
@@ -27,10 +27,8 @@
         timerElement.innerText = seconds + " detik";
       }
 
-      // Fetch data and start timer initially
       fetchDataAndTimer();
 
-      // Update timer every second
       let countdown = 15;
       updateTimer(countdown);
       const countdownInterval = setInterval(() => {
